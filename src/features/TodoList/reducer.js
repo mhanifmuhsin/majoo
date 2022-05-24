@@ -2,6 +2,7 @@ import {
   START_FETCHING_TODO_LIST,
   SUCCESS_FETCHING_TODO_LIST,
   ERROR_FETCHING_TODO_LIST,
+  DELETE_TODO_LIST,
 } from "./constants";
 
 const statuslist = {
@@ -22,10 +23,13 @@ export default function reducer(state = initialState, action) {
       return { ...state, status: statuslist.process };
 
     case SUCCESS_FETCHING_TODO_LIST:
-      return { ...state, data:action.data, status: statuslist.success };
+      return { ...state, data: action.data, status: statuslist.success };
 
     case ERROR_FETCHING_TODO_LIST:
       return { ...state, status: statuslist.error };
+
+    case DELETE_TODO_LIST:
+      return { data: state.data.filter((todo) => todo.id !== action.id) };
     default:
       return state;
   }

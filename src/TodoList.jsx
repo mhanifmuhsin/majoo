@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ModalDetail from "./components/ModalDetail";
-import { fetchTodoList } from "./features/TodoList/actions";
+import { fetchTodoList, deleteTodoList } from "./features/TodoList/actions";
 export default function TodoList() {
   let dispatch = useDispatch();
   let todoList = useSelector((state) => state.todoList);
@@ -20,8 +20,11 @@ export default function TodoList() {
     setTodo(todo);
     setIsOpen(true);
   }
-  console.log(todoList);
-  console.log(isOpen);
+
+  const handleDelete = (id) => {
+    dispatch(deleteTodoList(id));
+    setIsOpen(false);
+  };
   return (
     <div className="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans">
       <div className="bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg">
@@ -42,7 +45,7 @@ export default function TodoList() {
             todoList.data.map((todo) => {
               return (
                 <div
-                  onClick={()=>openModal(todo)}
+                  onClick={() => openModal(todo)}
                   className="flex mb-4 items-center cursor-pointer"
                   key={todo.id}
                 >
@@ -52,7 +55,12 @@ export default function TodoList() {
               );
             })}
 
-          <ModalDetail isOpen={isOpen} closeModal={closeModal} todo={todo} />
+          <ModalDetail
+            isOpen={isOpen}
+            closeModal={closeModal}
+            todo={todo}
+            handleDelete={handleDelete}
+          />
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@ import {
   START_FETCHING_TODO_LIST,
   SUCCESS_FETCHING_TODO_LIST,
   ERROR_FETCHING_TODO_LIST,
+  DELETE_TODO_LIST,
 } from "./constants";
 import { getTodoList } from "../../api/todo-list";
 
@@ -14,7 +15,6 @@ export const fetchTodoList = () => {
       dispatch(
         successFetchingTodoList({
           data,
-         
         })
       );
     } catch (err) {
@@ -39,5 +39,12 @@ export const successFetchingTodoList = ({ data }) => {
 export const errorFetchingTodoList = () => {
   return {
     type: ERROR_FETCHING_TODO_LIST,
+  };
+};
+
+export const deleteTodoList = (id) => {
+  return {
+    type: DELETE_TODO_LIST,
+    id,
   };
 };
