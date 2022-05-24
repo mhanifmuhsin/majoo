@@ -22,7 +22,7 @@ export default function reducer(state = initialState, action) {
       return { ...state, status: statuslist.process };
 
     case SUCCESS_FETCHING_TODO_LIST:
-      return { ...state, ...action.data, status: statuslist.success };
+      return { ...state, data:action.data, status: statuslist.success };
 
     case ERROR_FETCHING_TODO_LIST:
       return { ...state, status: statuslist.error };
