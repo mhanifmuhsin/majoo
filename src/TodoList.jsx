@@ -6,15 +6,17 @@ import {
   deleteTodoList,
   createTodoList,
 } from "./features/TodoList/actions";
+import moment from "moment";
 export default function TodoList() {
   let dispatch = useDispatch();
   let todoList = useSelector((state) => state.todoList);
   const [todo, setTodo] = useState();
   const initCreateTodo = {
-    id: 1,
+    id: Math.floor(Math.random() * 100),
     title: "",
     description: "",
-    createdAt: "",
+    status: 0,
+    createdAt: moment().format("YYYY-MM-DD h:mm"),
   };
   const [createTodo, setCreateTodo] = useState(initCreateTodo);
   let [isOpen, setIsOpen] = useState(false);
