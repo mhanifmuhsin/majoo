@@ -5,6 +5,7 @@ import {
   fetchTodoList,
   deleteTodoList,
   createTodoList,
+  editTodoList
 } from "./features/TodoList/actions";
 import moment from "moment";
 export default function TodoList() {
@@ -43,6 +44,11 @@ export default function TodoList() {
     dispatch(createTodoList(createTodo));
     setCreateTodo(initCreateTodo);
   };
+
+  const handleEdit = () =>{
+      dispatch(editTodoList(todo));
+      setIsOpen(false);
+  }
 
   return (
     <div className="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans">
@@ -96,6 +102,7 @@ export default function TodoList() {
             todo={todo}
             setTodo={setTodo}
             handleDelete={handleDelete}
+            handleEdit={handleEdit}
           />
         </div>
       </div>

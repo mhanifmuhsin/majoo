@@ -4,6 +4,7 @@ import {
   ERROR_FETCHING_TODO_LIST,
   DELETE_TODO_LIST,
   CREATE_TODO_LIST,
+  EDIT_TODO_LIST
 } from "./constants";
 
 const statuslist = {
@@ -31,9 +32,20 @@ export default function reducer(state = initialState, action) {
 
     case DELETE_TODO_LIST:
       return { data: state.data.filter((todo) => todo.id !== action.id) };
+
     case CREATE_TODO_LIST:
-        console.log(action.data,"pay")
-      return { ...state ,data: [...state.data, action.data,] };
+      return { ...state, data: [...state.data, action.data] };
+
+    case EDIT_TODO_LIST:
+        return {data : state.data.map((item) => {
+            if (item.id === action.data.id) {
+                return {
+                    ...item, ...action.data
+                }
+            } else {
+                return item;
+            }
+        })}
     default:
       return state;
   }

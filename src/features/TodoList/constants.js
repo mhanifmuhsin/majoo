@@ -4,3 +4,4 @@ export const ERROR_FETCHING_TODO_LIST= 'features/TodoList/ERROR_FETCHING_TODO_LI
 
 export const DELETE_TODO_LIST = 'features/TodoList/DELETE_TODO_LIST';
 export const CREATE_TODO_LIST = 'features/TodoList/CREATE_TODO_LIST';
+export const EDIT_TODO_LIST = 'features/TodoList/EDIT_TODO_LIST';

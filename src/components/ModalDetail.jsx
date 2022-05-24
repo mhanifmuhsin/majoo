@@ -7,6 +7,7 @@ export default function ModalDetail({
   todo,
   handleDelete,
   setTodo,
+  handleEdit,
 }) {
   const [isEdit, setIsEdit] = useState(false);
   return (
@@ -91,18 +92,14 @@ export default function ModalDetail({
                             checked={todo.status === 0}
                             onChange={() => setTodo({ ...todo, status: 0 })}
                           />
-                          <span >
-                          Not Done
-                            </span>
+                          <span>Not Done</span>
                           <input
                             type="radio"
                             name="status"
                             checked={todo.status === 1}
                             onChange={() => setTodo({ ...todo, status: 1 })}
                           />
-                          <span>
-                          Done
-                            </span>
+                          <span>Done</span>
                         </div>
                       </>
                     ) : (
@@ -130,7 +127,10 @@ export default function ModalDetail({
                       <button
                         type="button"
                         className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                        onClick={() => setIsEdit(true)}
+                        onClick={() => {
+                          handleEdit();
+                          setIsEdit(false);
+                        }}
                       >
                         Save
                       </button>
