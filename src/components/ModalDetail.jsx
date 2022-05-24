@@ -36,15 +36,15 @@ export default function ModalDetail({ isOpen, closeModal , todo}) {
                     className="flex flex-col  leading-6 "
                   >
                     <span className="text-sm">Title</span>
-                    <span className="text-xs text-gray-500">{todo.title}</span>
+                    <span className="text-xs text-gray-500">{todo?.title}</span>
                   </Dialog.Title>
                   <div className="flex flex-col mt-2">
                     <span className="text-sm">Description</span>
-                    <span className="text-xs text-gray-500">{todo.description}</span>
+                    <span className="text-xs text-gray-500">{todo?.description}</span>
                   </div>
                   <div className="flex flex-col mt-2">
                     <span className="text-sm">Status</span>
-                    <span className="text-xs text-gray-500">{todo.status === 0 ? 'Not Done':'Done'}</span>
+                    <span className="text-xs text-gray-500">{todo?.status === 0 ? 'Not Done':'Done'}</span>
                   </div>
 
                   <div className="mt-4 flex space-x-2 justify-end">
