@@ -3,6 +3,7 @@ import {
   SUCCESS_FETCHING_TODO_LIST,
   ERROR_FETCHING_TODO_LIST,
   DELETE_TODO_LIST,
+  CREATE_TODO_LIST
 } from "./constants";
 import { getTodoList } from "../../api/todo-list";
 
@@ -48,3 +49,11 @@ export const deleteTodoList = (id) => {
     id,
   };
 };
+
+export const createTodoList = (payload) => {
+    console.log(payload,"Palyoad")
+    return{
+        type: CREATE_TODO_LIST,
+        data:payload
+    }
+}

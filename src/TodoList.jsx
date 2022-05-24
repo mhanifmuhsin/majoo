@@ -1,11 +1,22 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ModalDetail from "./components/ModalDetail";
-import { fetchTodoList, deleteTodoList } from "./features/TodoList/actions";
+import {
+  fetchTodoList,
+  deleteTodoList,
+  createTodoList,
+} from "./features/TodoList/actions";
 export default function TodoList() {
   let dispatch = useDispatch();
   let todoList = useSelector((state) => state.todoList);
   const [todo, setTodo] = useState();
+  const initCreateTodo = {
+    id: 1,
+    title: "",
+    description: "",
+    createdAt: "",
+  };
+  const [createTodo, setCreateTodo] = useState(initCreateTodo);
   let [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -25,17 +36,38 @@ export default function TodoList() {
     dispatch(deleteTodoList(id));
     setIsOpen(false);
   };
+
+  const handleAdd = () => {
+    dispatch(createTodoList(createTodo));
+    setCreateTodo(initCreateTodo);
+  };
   return (
     <div className="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans">
       <div className="bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg">
         <div className="mb-4">
           <h1 className="text-grey-darkest">Todo List</h1>
-          <div className="flex mt-4">
+          <div className="flex flex-col space-y-2 mt-4">
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker"
-              placeholder="Add Todo"
+              placeholder="Title"
+              value={createTodo.title}
+              onChange={(e) =>
+                setCreateTodo({ ...createTodo, title: e.target.value })
+              }
             />
-            <button className="flex-no-shrink p-2 border-2 rounded text-teal border-teal hover:text-white hover:bg-teal">
+
+            <textarea
+              className="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker"
+              placeholder="Description"
+              value={createTodo.description}
+              onChange={(e) =>
+                setCreateTodo({ ...createTodo, description: e.target.value })
+              }
+            />
+            <button
+              onClick={() => handleAdd()}
+              className="flex-no-shrink p-2 border-2 rounded text-teal border-teal hover:text-white hover:bg-teal"
+            >
               Add
             </button>
           </div>
