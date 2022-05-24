@@ -1,7 +1,14 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 
-export default function ModalDetail({ isOpen, closeModal , todo, handleDelete}) {
+export default function ModalDetail({
+  isOpen,
+  closeModal,
+  todo,
+  handleDelete,
+  setTodo,
+}) {
+  const [isEdit, setIsEdit] = useState(false);
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -30,45 +37,122 @@ export default function ModalDetail({ isOpen, closeModal , todo, handleDelete}) 
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="flex flex-col  leading-6 "
-                  >
-                    <span className="text-sm">Title</span>
-                    <span className="text-xs text-gray-500">{todo?.title}</span>
+                  <Dialog.Title as="h3" className="flex flex-col  leading-6 ">
+                    {isEdit ? (
+                      <input
+                        className="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker"
+                        placeholder="Title"
+                        value={todo.title}
+                        onChange={(e) =>
+                          setTodo({
+                            ...todo,
+                            title: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      <>
+                        <span className="text-sm">Title</span>
+                        <span className="text-xs text-gray-500">
+                          {todo?.title}
+                        </span>
+                      </>
+                    )}
                   </Dialog.Title>
                   <div className="flex flex-col mt-2">
-                    <span className="text-sm">Description</span>
-                    <span className="text-xs text-gray-500">{todo?.description}</span>
+                    {isEdit ? (
+                      <textarea
+                        className="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker"
+                        placeholder="Description"
+                        value={todo.description}
+                        onChange={(e) =>
+                          setTodo({
+                            ...todo,
+                            description: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      <>
+                        <span className="text-sm">Description</span>
+                        <span className="text-xs text-gray-500">
+                          {todo?.description}
+                        </span>
+                      </>
+                    )}
                   </div>
                   <div className="flex flex-col mt-2">
-                    <span className="text-sm">Status</span>
-                    <span className="text-xs text-gray-500">{todo?.status === 0 ? 'Not Done':'Done'}</span>
+                    {isEdit ? (
+                      <>
+                        <div className="flex space-x-2 items-center">
+                          <input
+                            type="radio"
+                            name="status"
+                            checked={todo.status === 0}
+                            onChange={() => setTodo({ ...todo, status: 0 })}
+                          />
+                          <span >
+                          Not Done
+                            </span>
+                          <input
+                            type="radio"
+                            name="status"
+                            checked={todo.status === 1}
+                            onChange={() => setTodo({ ...todo, status: 1 })}
+                          />
+                          <span>
+                          Done
+                            </span>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-sm">Status</span>
+                        <span className="text-xs text-gray-500">
+                          {todo?.status === 0 ? "Not Done" : "Done"}
+                        </span>
+                      </>
+                    )}
                   </div>
 
                   <div className="mt-4 flex space-x-2 justify-end">
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
+                      onClick={() => {
+                        closeModal();
+                        setIsEdit(false);
+                      }}
                     >
                       Cancel
                     </button>
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
-                    >
-                      Update
-                    </button>
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={()=>handleDelete(todo.id)}
-                      disabled={todo?.status===1}
-                    >
-                      Delete
-                    </button>
+                    {isEdit ? (
+                      <button
+                        type="button"
+                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        onClick={() => setIsEdit(true)}
+                      >
+                        Save
+                      </button>
+                    ) : (
+                      <>
+                        <button
+                          type="button"
+                          className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                          onClick={() => setIsEdit(true)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          type="button"
+                          className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                          onClick={() => handleDelete(todo.id)}
+                          disabled={todo?.status === 1}
+                        >
+                          Delete
+                        </button>
+                      </>
+                    )}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
