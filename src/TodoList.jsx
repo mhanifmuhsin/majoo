@@ -75,7 +75,7 @@ export default function TodoList() {
             />
             <button
               onClick={() => handleAdd()}
-              className="flex-no-shrink p-2 border-2 rounded text-white border-teal hover:text-white hover:bg-green-300 bg-green-500"
+              className="flex-no-shrink p-2 border-2 rounded text-white border-teal hover:text-white hover:bg-green-600 bg-green-500"
             >
               Add
             </button>

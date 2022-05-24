@@ -41,7 +41,7 @@ export default function ModalDetail({
                   <Dialog.Title as="h3" className="flex flex-col  leading-6 ">
                     {isEdit ? (
                       <input
-                        className="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker"
+                        className="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-sm"
                         placeholder="Title"
                         value={todo.title}
                         onChange={(e) =>
@@ -63,7 +63,7 @@ export default function ModalDetail({
                   <div className="flex flex-col mt-2">
                     {isEdit ? (
                       <textarea
-                        className="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker"
+                        className="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-sm"
                         placeholder="Description"
                         value={todo.description}
                         onChange={(e) =>
@@ -87,19 +87,20 @@ export default function ModalDetail({
                       <>
                         <div className="flex space-x-2 items-center">
                           <input
+                            className="text-sm"
                             type="radio"
                             name="status"
                             checked={todo.status === 0}
                             onChange={() => setTodo({ ...todo, status: 0 })}
                           />
-                          <span>Not Done</span>
+                          <span className="text-sm">Not Done</span>
                           <input
                             type="radio"
                             name="status"
                             checked={todo.status === 1}
                             onChange={() => setTodo({ ...todo, status: 1 })}
                           />
-                          <span>Done</span>
+                          <span className="text-sm">Done</span>
                         </div>
                       </>
                     ) : (
@@ -126,7 +127,7 @@ export default function ModalDetail({
                     {isEdit ? (
                       <button
                         type="button"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        className="inline-flex justify-center rounded-md border border-transparent bg-green-500 px-4 py-2 text-sm font-medium text-white hover:bg-green-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                         onClick={() => {
                           handleEdit();
                           setIsEdit(false);
@@ -138,19 +139,21 @@ export default function ModalDetail({
                       <>
                         <button
                           type="button"
-                          className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                          className="inline-flex justify-center rounded-md border border-transparent bg-yellow-500 px-4 py-2 text-sm font-medium text-white hover:bg-yellow-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                           onClick={() => setIsEdit(true)}
                         >
                           Edit
                         </button>
-                        <button
-                          type="button"
-                          className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                          onClick={() => handleDelete(todo.id)}
-                          disabled={todo?.status === 1}
-                        >
-                          Delete
-                        </button>
+                        {todo.status === 0 && (
+                          <button
+                            type="button"
+                            className="inline-flex justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                            onClick={() => handleDelete(todo.id)}
+                            disabled={todo?.status === 1}
+                          >
+                            Delete
+                          </button>
+                        )}
                       </>
                     )}
                   </div>
