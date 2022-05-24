@@ -1,14 +1,27 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import ModalDetail from "./components/ModalDetail";
 import { fetchTodoList } from "./features/TodoList/actions";
 export default function TodoList() {
   let dispatch = useDispatch();
   let todoList = useSelector((state) => state.todoList);
+  const [todo, setTodo] = useState();
+  let [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchTodoList());
   }, [dispatch]);
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  function openModal(todo) {
+    setTodo(todo);
+    setIsOpen(true);
+  }
   console.log(todoList);
+  console.log(isOpen);
   return (
     <div className="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans">
       <div className="bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg">
@@ -28,33 +41,18 @@ export default function TodoList() {
           {todoList &&
             todoList.data.map((todo) => {
               return (
-                <div className="flex mb-4 items-center" key={todo.id}>
-                  <p className="w-full text-grey-darkest">
-                    {todo.title}
-                  </p>
-                  <p className="w-full text-grey-darkest">
-                    {todo.description}
-                  </p>
-                  <button className="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-green border-green hover:bg-green">
-                    Done
-                  </button>
-                  <button className="flex-no-shrink p-2 ml-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">
-                    Remove
-                  </button>
+                <div
+                  onClick={()=>openModal(todo)}
+                  className="flex mb-4 items-center cursor-pointer"
+                  key={todo.id}
+                >
+                  <p className="w-full text-grey-darkest">{todo.title}</p>
+                  <p className="w-full text-grey-darkest">{todo.description}</p>
                 </div>
               );
             })}
-          {/* <div className="flex mb-4 items-center">
-            <p className="w-full line-through text-green">
-              Submit Todo App Component to Tailwind Components
-            </p>
-            <button className="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-grey border-grey hover:bg-grey">
-              Not Done
-            </button>
-            <button className="flex-no-shrink p-2 ml-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">
-              Remove
-            </button>
-          </div> */}
+
+          <ModalDetail isOpen={isOpen} closeModal={closeModal} todo={todo} />
         </div>
       </div>
     </div>
